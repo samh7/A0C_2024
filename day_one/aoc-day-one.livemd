@@ -1,9 +1,22 @@
 # AOC DAY 1
 
+```elixir
+Mix.install(
+  [
+    {:req, "~> 0.4.8"},
+  ]
+)
+```
+
 ## Section
 
 ```elixir
-{:ok, contents} = File.read("https://www.github.com/samh7/A0C_2024/day_one/text.txt")
+{:ok, response} = Req.get("https://raw.githubusercontent.com/samh7/A0C_2024/refs/heads/master/day_one/text.txt")
+contents = response.body
+```
+
+```elixir
+
 ```
 
 ```elixir
