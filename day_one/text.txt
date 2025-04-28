@@ -1,9 +1,3 @@
-# AOC DAY 1
-
-## Section
-
-```elixir
-str_list = """
 62619   25903
 30326   94750
 84092   60901
@@ -1004,57 +998,3 @@ str_list = """
 74304   65351
 91142   74386
 61587   43591
-"""
-```
-
-```elixir
-str_list =
-  str_list
-  |> String.split(" ", trim: true)
-  |> Enum.map(
-    &(String.split(&1, "\n", trim: true)
-      |> Enum.map(fn str -> String.to_integer(str) end)
-      |> List.to_tuple())
-  )
-
-```
-
-```elixir
-defmodule AOC_DayOne do
-  def day_one([{head} | tail]) do
-    day_one(tail, head)
-  end
-
-  def day_one([], _) do
-    []
-  end
-
-  def day_one([{a,b} | list], prev) do
-    [[prev,  a] | day_one(list, b)]
-  end
-
-  def day_one([{a}], prev) do
-    [[prev,  a]]
-  end
-
-  def day_one([{a} | list], _) do
-    day_one(list, a)
-  end
-end
-```
-
-```elixir
-AOC_DayOne.day_one(str_list)
-|> Enum.zip()
-|> Enum.map(
-  &(Tuple.to_list(&1)
-    |> Enum.sort())
-)
-|> Enum.zip()
-|> Enum.reduce([], fn i, acc ->
-  {a,b} = i
-  [abs(a - b) | acc]
-end)
-|> Enum.sum()
-
-```
