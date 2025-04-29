@@ -1,0 +1,71 @@
+# AOC_DAY 2
+
+```elixir
+Mix.install(
+  [
+    {:req, "~> 0.4.8"},
+  ]
+)
+```
+
+## Section
+
+```elixir
+{:ok, response} = Req.get("https://raw.githubusercontent.com/samh7/A0C_2024/refs/heads/master/day_two/text.txt")
+contents = response.body
+```
+
+```elixir
+str_list = contents
+  str_list
+  |> String.split("\n", tim: true)
+  |> Enum.reject(&(String.trim(&1) == ""))
+  |> Enum.map(
+    &(String.split(&1, " ", trim: true)
+      |> Enum.map(fn str ->
+        String.to_integer(str)
+      end))
+  )
+  |> Enum.map(
+    &(&1
+      |> Enum.chunk_every(2, 1, :discard)
+      |> Enum.map(fn [a, b] ->
+        cond do
+          b > a -> {:increasing, b - a}
+          b < a -> {:decreasing, a - b}
+          true -> {:no_change, 0}
+        end
+      end))
+  )
+```
+
+```elixir
+unique_types =
+  Enum.map(
+    str_list,
+    &(&1
+      |> Enum.map(fn c ->
+        c |> elem(0)
+      end)
+      |> Enum.uniq())
+  )
+
+max_changes =
+  Enum.map(
+    str_list,
+    &(&1
+        |> Enum.map(fn c ->
+        c |> elem(1)
+      end)
+      |> Enum.max())
+  )
+
+[unique_types, max_changes]
+|> Enum.zip()
+|> Enum.map(fn i ->
+  {j, k} = i
+  length(j) == 1 && k <= 3
+end)
+|> Enum.filter(& &1)
+|> length()
+```
