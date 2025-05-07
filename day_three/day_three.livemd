@@ -10,7 +10,6 @@ defmodule Day3 do
   def day_3_part1(str) do
     str
     |> String.split("mul(", trim: true)
-    |> Enum.map(&String.trim(&1))
     |> List.flatten()
     |> Enum.map(fn x ->
       x |> String.split(")", trim: true)
@@ -32,9 +31,6 @@ defmodule Day3 do
       String.to_integer(f) * String.to_integer(s) + acc
     end)
   end
-
-  # def day_3_part1(str) do
-  # end
 
   def day_3_part2(str \\ "", use \\ true)
 
@@ -95,5 +91,4 @@ why()}do()*:/%select(492,745)#*how()mul(103,86)&*#mulhow()mul(205,551)&//%$]why(
 str
 |> Day3.day_3_part2()
 |> Day3.day_3_part1()
-
 ```
